@@ -1,5 +1,6 @@
 package com.codepath.adelkassem.flixster;
 
+import androidx.databinding.DataBindingUtil;
 import okhttp3.Headers;
 
 import android.graphics.Color;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.codepath.adelkassem.flixster.databinding.ActivityDetailBinding;
+import com.codepath.adelkassem.flixster.databinding.ActivityMainBinding;
 import com.codepath.adelkassem.flixster.models.Movie;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -25,32 +28,42 @@ import org.parceler.Parcels;
 public class DetailActivity extends YouTubeBaseActivity {
 
     public static final String TAG = "DetailActivity";
-    private static final String YOUTUBE_API_KEY = "AIzaSyDBEL5_jtf9DAeHphQjbBQ8eI1OKCyRunY";
-    public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+    private static final String YOUTUBE_API_KEY = BuildConfig.YOUTUBE_API_KEY;
+    private static final String TMDB_API_KEY = BuildConfig.TMDB_API_KEY;
+    public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=" + TMDB_API_KEY;
+    public static final String MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/%d?api_key=" + TMDB_API_KEY;
+    public static final String MOVIE_CREDITS_URL = "https://api.themoviedb.org/3/movie/%d/credits?api_key=" + TMDB_API_KEY;
+
+    // Store the binding
+    private ActivityDetailBinding binding;
 
     TextView tvTitle;
     TextView tvOverview;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
+    TextView tvGenre;
+    TextView tvDirector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        // Inflate the content view (replacing `setContentView`)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         setActivityBackgroundColor(Color.rgb(10, 10, 10));
 
-        tvTitle = findViewById(R.id.tvTitle);
-        tvOverview = findViewById(R.id.tvOverview);
-        ratingBar = findViewById(R.id.ratingBar);
-        youTubePlayerView = findViewById(R.id.player);
+        tvTitle = binding.tvTitle;
+        tvOverview = binding.tvOverview;
+        ratingBar = binding.ratingBar;
+        youTubePlayerView = binding.player;
+        tvGenre = binding.tvGenre;
+        tvDirector = binding.tvDirector;
 
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         tvTitle.setText(movie.getTitle());
-        tvTitle.setTextColor(Color.rgb(255, 165, 0));
+        tvTitle.setTextColor(Color.WHITE);
         tvOverview.setText(movie.getOverview());
-        tvOverview.setTextColor(Color.WHITE);
+        tvOverview.setTextColor(Color.LTGRAY);
         ratingBar.setRating((float) movie.getRating()/2);
-        ratingBar.setBackgroundColor(Color.rgb(50, 50, 50));
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(String.format(VIDEOS_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
@@ -79,9 +92,75 @@ public class DetailActivity extends YouTubeBaseActivity {
                             youTubePlayerView.setBackgroundResource(R.drawable.place_holder_image);
                         }
                     }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse JSON", e);
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
 
+        client.get(String.format(MOVIE_DETAILS_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray genres = jsonObject.getJSONArray("genres");
 
+                    if (genres.length() != 0) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < genres.length(); i++) {
+                            String genreName = genres.getJSONObject(i).getString("name");
+                            if (i == genres.length() - 1) {
+                                sb.append(genreName);
+                                break;
+                            }
+                            sb.append(genreName + ", ");
+                        }
+
+                        tvGenre.setText("Genre: " + sb);
+                        tvGenre.setTextColor(Color.rgb(100, 100, 100));
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Failed to parse JSON", e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
+
+        client.get(String.format(MOVIE_CREDITS_URL, movie.getMovieId()), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray crew = jsonObject.getJSONArray("crew");
+
+                    if (crew.length() != 0) {
+                        String directorName = "";
+                        for (int i = 0; i < crew.length(); i++) {
+                            String jobTitle = crew.getJSONObject(i).getString("job");
+                            if (jobTitle.equals("Director")) {
+                                directorName = crew.getJSONObject(i).getString("name");
+                                break;
+                            }
+                        }
+
+                        if (!directorName.equals("")) {
+                            tvDirector.setText("Director: " + directorName);
+                            tvDirector.setTextColor(Color.rgb(100, 100, 100));
+                        }
+                    }
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON", e);
                     e.printStackTrace();

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -9,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "YOUTUBE_API_KEY", apikeyProperties['YOUTUBE_API_KEY'])
+        buildConfigField("String", "TMDB_API_KEY", apikeyProperties['TMDB_API_KEY'])
     }
     buildTypes {
         release {
@@ -16,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -36,4 +43,6 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    // Circle Image View
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 }

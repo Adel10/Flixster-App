@@ -1,42 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DetailActivity"
-    android:orientation="vertical"
-    android:id="@+id/deta">
-
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/player"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="match_parent"
+        tools:context=".DetailActivity"
+        android:orientation="vertical"
+        android:id="@+id/deta">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:textSize="30sp"
-        android:textStyle="italic|bold"
-        tools:text="It Chapter 2" />
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:rating="8.5" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="25sp"
+            android:textStyle="italic|bold"
+            tools:text="It Chapter 2" />
 
-    <TextView
-        android:id="@+id/tvOverview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        tools:text="test movie overview" />
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="4"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:theme="@style/RatingBar"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="15dp"
+            tools:text="test movie overview" />
+
+        <TextView
+            android:id="@+id/tvGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            tools:text="Genre: Vince Mike" />
+
+        <TextView
+            android:id="@+id/tvDirector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="2dp"
+            android:textSize="12sp"
+            tools:text="Director: Cameron James" />
+
+    </LinearLayout>
+</layout>

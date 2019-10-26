@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp">
@@ -19,6 +20,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/rvPoster"
         android:textSize="24sp"
+        android:textStyle="italic|bold"
         tools:text="Joker" />
 
     <TextView
@@ -29,5 +31,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/rvPoster"
+        android:ellipsize="end"
+        android:maxLines="6"
         tools:text="During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure." />
 </RelativeLayout>

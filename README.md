@@ -10,7 +10,7 @@ Flix is an Android app that allows users to browse movies from the [The Movie Da
 * Views are responsive for both landscape/portrait mode.
 * Improved the user interface by experimenting with styling and coloring.
 
-### App Walkthough GIF
+### App Walkthough
 
 <img src='walkthrough.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' /><br>
 

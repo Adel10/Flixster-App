@@ -3,12 +3,12 @@ Flix is an app that allows users to browse movies from the [The Movie Database A
 
 
 ## Features
-- [x] User can view a list of movies (title, poster image, and overview) currently playing in theaters from the Movie Database API.
-- [x] Exposed details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity.
-- [x] Used Heterogenous RecyclerViews and different ViewHolder layout files for popular movies and less popular ones.
-- [x] User can view trailers for each movie.
-- [x] Views are responsive for both landscape/portrait mode.
-- [x] Improved the user interface by experimenting with styling and coloring.
+* User can view a list of movies (title, poster image, and overview) currently playing in theaters from the Movie Database API.
+* Exposed details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity.
+* Used Heterogenous RecyclerViews and different ViewHolder layout files for popular movies and less popular ones.
+* User can view trailers for each movie.
+* Views are responsive for both landscape/portrait mode.
+* Improved the user interface by experimenting with styling and coloring.
 
 ### App Walkthough GIF
 

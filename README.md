@@ -14,6 +14,8 @@ Flix is an Android app that allows users to browse movies from the [The Movie Da
 
 <img src='walkthrough.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' /><br>
 
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 ## Open-source libraries used
 - [Android Async HTTP](https://github.com/codepath/CPAsyncHttpClient) - Simple asynchronous HTTP requests with JSON parsing
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
